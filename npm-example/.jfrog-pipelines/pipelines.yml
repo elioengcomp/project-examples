@@ -11,8 +11,8 @@ resources:
     type: Image
     configuration:
       registry: my_art
-      sourceRepository: default-docker
-      imageName: elioengcomp.jfrog.io/default-docker/node
+      sourceRepository: docker
+      imageName: eemarcolino.jfrog.io/docker/node
       imageTag: latest
       autoPull: true
 
@@ -20,8 +20,8 @@ resources:
     type: Image
     configuration:
       registry: my_art
-      sourceRepository: default-docker
-      imageName: elioengcomp.jfrog.io/default-docker/helloworld
+      sourceRepository: docker
+      imageName: eemarcolino.jfrog.io/docker/helloworld
       imageTag: latest
       autoPull: true
 
@@ -51,7 +51,7 @@ pipelines:
           affinityGroup: docker_group
           dockerFileLocation: ./npm-example
           dockerFileName: Dockerfile
-          dockerImageName: elioengcomp.jfrog.io/default-docker/helloworld    # replace with your fully qualified Docker registry/image name
+          dockerImageName: eemarcolino.jfrog.io/docker/helloworld    # replace with your fully qualified Docker registry/image name
           dockerImageTag: ${run_number}
           inputSteps:
             - name: build_npm
@@ -65,7 +65,7 @@ pipelines:
         type: DockerPush
         configuration:
           affinityGroup: docker_group
-          targetRepository: default-docker
+          targetRepository: docker
           integrations:
             - name: my_art
           inputSteps:
@@ -76,6 +76,7 @@ pipelines:
       - name: publish_build_info
         type: PublishBuildInfo
         configuration:
+          forceXrayScan: true
           inputSteps:
             - name: push_image
           outputResources:
