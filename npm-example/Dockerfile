@@ -1,4 +1,4 @@
-FROM elioengcomp.jfrog.io/default-docker/node:latest
+FROM eemarcolino.jfrog.io/docker/node:latest
 
 ADD . /helloworld/
 WORKDIR /helloworld
